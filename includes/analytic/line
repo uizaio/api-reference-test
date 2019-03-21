@@ -1,0 +1,228 @@
+<h2 id='line'>Line</h2>
+<blockquote>
+<p>Example Request</p>
+</blockquote>
+<pre class="highlight shell"><code class="language-bash">curl -X GET <span class="se">\</span>
+  <span class="s1">'https://api.uiza.co/api/public/v3/analytic/entity/video-quality/line?start_date=2018-11-01&amp;end_date=2018-11-19'</span> <span class="se">\</span>
+  -H <span class="s1">'Authorization: <span class="token">uap-b2a3e6307dcf421a8a455825c01de914-a03248e7</span>'</span> <span class="se">\</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code class="language-ruby"><span class="nb">require</span> <span class="s2">"uiza"</span>
+
+<span class="no">Uiza</span><span class="p">.</span><span class="nf">workspace_api_domain</span> <span class="o">=</span> <span class="s2">"https://api.uiza.co"</span>
+<span class="no">Uiza</span><span class="p">.</span><span class="nf">authorization</span> <span class="o">=</span> <span class="s2">"your-authorization"</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">start_date: </span><span class="s2">"YYYY-MM-DD hh:mm"</span><span class="p">,</span>
+  <span class="ss">end_date: </span><span class="s2">"YYYY-MM-DD hh:mm"</span><span class="p">,</span>
+  <span class="ss">type: </span><span class="s2">"your-metric-type"</span>
+<span class="p">}</span>
+
+<span class="k">begin</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="no">Uiza</span><span class="o">::</span><span class="no">Analytic</span><span class="p">.</span><span class="nf">get_line</span> <span class="n">params</span>
+  <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">day_time</span>
+  <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">value</span>
+<span class="k">rescue</span> <span class="no">Uiza</span><span class="o">::</span><span class="no">Error</span><span class="o">::</span><span class="no">UizaError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="s2">"description_link: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">description_link</span><span class="si">}</span><span class="s2">"</span>
+  <span class="nb">puts</span> <span class="s2">"code: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">code</span><span class="si">}</span><span class="s2">"</span>
+  <span class="nb">puts</span> <span class="s2">"message: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">rescue</span> <span class="no">StandardError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="s2">"message: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+</code></pre><pre class="highlight python tab-python"><code class="language-python"><span class="n">res</span><span class="p">,</span> <span class="n">status_code</span> <span class="o">=</span> <span class="n">Analytic</span><span class="p">()</span><span class="o">.</span><span class="n">get_line</span><span class="p">(</span>
+  <span class="n">start_date</span><span class="o">=</span><span class="s">"2018-11-01 20:00"</span><span class="p">,</span>
+  <span class="n">end_date</span><span class="o">=</span><span class="s">"2019-11-02 20:00"</span><span class="p">,</span>
+  <span class="nb">type</span><span class="o">=</span><span class="s">"video_startup_time"</span>
+<span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"status_code"</span><span class="p">,</span> <span class="n">status_code</span><span class="p">)</span>
+</code></pre><pre class="highlight php tab-php"><code class="language-php"><span class="cp">&lt;?</span>
+<span class="nv">$params</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s2">"start_date"</span> <span class="o">=&gt;</span> <span class="s2">"YYYY-MM-DD"</span><span class="p">,</span>
+  <span class="s2">"end_date"</span> <span class="o">=&gt;</span> <span class="s2">"YYYY-MM-DD"</span><span class="p">,</span>
+  <span class="s2">"type"</span> <span class="o">=&gt;</span> <span class="s2">"rebuffer_count"</span>
+<span class="p">];</span>
+
+<span class="nx">Uiza\Analytic</span><span class="o">::</span><span class="na">getLine</span><span class="p">(</span><span class="nv">$params</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</code></pre><pre class="highlight java tab-java"><code class="language-java"><span class="kn">import</span> <span class="nn">io.uiza.model.Analytic</span><span class="o">;</span>
+
+<span class="n">Uiza</span><span class="o">.</span><span class="na">apiDomain</span> <span class="o">=</span> <span class="s">"https://api.uiza.co"</span><span class="o">;</span>
+<span class="n">Uiza</span><span class="o">.</span><span class="na">apiKey</span> <span class="o">=</span> <span class="s">"<span class="token">uap-b2a3e6307dcf421a8a455825c01de914-a03248e7</span>"</span><span class="o">;</span>
+
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+<span class="n">params</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"start_date"</span><span class="o">,</span> <span class="s">"2019-01-01"</span><span class="o">);</span>
+<span class="n">params</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"end_date"</span><span class="o">,</span> <span class="s">"2019-03-01"</span><span class="o">);</span>
+<span class="n">params</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"type"</span><span class="o">,</span> <span class="n">Metric</span><span class="o">.</span><span class="na">REBUFFER_COUNT</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+
+<span class="k">try</span> <span class="o">{</span>
+  <span class="n">JsonArray</span> <span class="n">analytics</span> <span class="o">=</span> <span class="n">Analytic</span><span class="o">.</span><span class="na">getLine</span><span class="o">(</span><span class="n">params</span><span class="o">);</span>
+  <span class="n">JsonObject</span> <span class="n">analytic</span> <span class="o">=</span> <span class="n">analytics</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getAsJsonObject</span><span class="o">();</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">analytic</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">UizaException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Status is: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getStatusCode</span><span class="o">());</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Message is: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Description link is: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getDescriptionLink</span><span class="o">());</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code class="language-javascript"><span class="kr">const</span> <span class="nx">uiza</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../lib/uiza'</span><span class="p">)(</span><span class="s1">'https://api.uiza.co'</span><span class="p">,</span> <span class="s1">'your-authorization'</span><span class="p">);</span>
+
+<span class="cm">/** get_line */</span>
+<span class="nx">uiza</span><span class="p">.</span><span class="nx">analytic</span><span class="p">.</span><span class="nx">get_line</span><span class="p">({</span>
+  <span class="s1">'start_date'</span><span class="p">:</span> <span class="s1">'2019-01-01'</span><span class="p">,</span>
+  <span class="s1">'end_date'</span><span class="p">:</span> <span class="s1">'2019-03-01'</span><span class="p">,</span>
+  <span class="s1">'type'</span><span class="p">:</span> <span class="s1">'rebuffer_count'</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">//Error</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight go tab-go"><code class="language-go"><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
+  </span><span class="s">"github.com/uizaio/api-wrapper-go"</span><span class="x">
+  </span><span class="s">"github.com/uizaio/api-wrapper-go/analytic"</span><span class="x">
+</span><span class="p">)</span><span class="x">
+
+</span><span class="n">rebufferCount</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">uiza</span><span class="o">.</span><span class="n">AnalyticMetricRebufferCount</span><span class="x">
+</span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="o">&amp;</span><span class="n">uiza</span><span class="o">.</span><span class="n">AnalyticLineParams</span><span class="p">{</span><span class="x">
+  </span><span class="n">StartDate</span><span class="o">:</span><span class="x"> </span><span class="n">uiza</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"2019-01-01"</span><span class="p">),</span><span class="x">
+  </span><span class="n">EndDate</span><span class="o">:</span><span class="x"> </span><span class="n">uiza</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"2019-02-28"</span><span class="p">),</span><span class="x">
+  </span><span class="n">Type</span><span class="o">:&amp;</span><span class="n">rebufferCount</span><span class="p">,</span><span class="x">
+</span><span class="p">}</span><span class="x">
+</span><span class="n">response</span><span class="p">,</span><span class="x"> </span><span class="n">_</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">analytic</span><span class="o">.</span><span class="n">GetLine</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="x">
+</span><span class="k">for</span><span class="x"> </span><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">response</span><span class="x"> </span><span class="p">{</span><span class="x">
+  </span><span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="p">)</span><span class="x">
+</span><span class="p">}</span><span class="x">
+</span></code></pre><pre class="highlight csharp tab-csharp"><code class="language-csharp"><span class="k">using</span> <span class="nn">Uiza.Net.Services</span><span class="p">;</span>
+
+<span class="n">UizaConfiguration</span><span class="p">.</span><span class="nf">SetupUiza</span><span class="p">(</span><span class="k">new</span> <span class="n">UizaConfigOptions</span>
+<span class="p">{</span>
+  <span class="n">ApiKey</span> <span class="p">=</span> <span class="s">"<span class="token">uap-b2a3e6307dcf421a8a455825c01de914-a03248e7</span>"</span><span class="p">,</span>
+  <span class="n">ApiBase</span> <span class="p">=</span> <span class="s">"https://api.uiza.co"</span>
+<span class="p">});</span>
+
+<span class="kt">var</span> <span class="n">getLine</span> <span class="p">=</span> <span class="n">UizaServices</span><span class="p">.</span><span class="n">Analytic</span><span class="p">.</span><span class="nf">GetLine</span><span class="p">(</span><span class="k">new</span> <span class="nf">AnalyticLineParameter</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">StartDate</span> <span class="p">=</span> <span class="s">@"2019-01-01"</span><span class="p">,</span>
+  <span class="n">EndDate</span> <span class="p">=</span> <span class="s">@"2019-03-01"</span><span class="p">,</span>
+  <span class="n">Type</span> <span class="p">=</span> <span class="n">LineType</span><span class="p">.</span><span class="n">RebufferCount</span>
+<span class="p">});</span>
+<span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"Get Line Success, total record {0}"</span><span class="p">,</span> <span class="n">getLine</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">Count</span><span class="p">));</span>
+</code></pre>
+<blockquote>
+<p>Example Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code class="language-json"><span class="p">{</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1541548800000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1541635200000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1541721600000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1541980800000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1542240000000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1542499200000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"day"</span><span class="p">:</span><span class="w"> </span><span class="mi">1542585600000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"total_view"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-18T03:17:07.022Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"policy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"requestId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"244f6f8f-4fc5-4f20-a535-e8ea4e0cab0e"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"serviceName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p><strong>Get data grouped by hour.</strong> Get data in time range. This help you to draw a line chart to visualize data</p>
+
+<p><code>About grouped by hour algorithm, Uiza currently support upto 16 days (it&#39;s mean when your time range is lower than 16 days, data response will be grouped by hour. Otherwise, it will return and to be grouped by day). In case your requested timerange doesn&#39;t have data, API won&#39;t show it in response.</code></p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><span class="get-button"> GET </span>
+<code>https://api.uiza.co/api/public/v3/analytic/entity/video-quality/line</code></p>
+
+<p><strong>Header Request</strong></p>
+
+<table><thead>
+<tr>
+<th>Header</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Authorization</strong></td>
+<td><em>string</em></td>
+<td>Token get from API <a href="#get-api-key">Get API key</a></td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody></table>
+
+<p><strong>Body Request</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>start_date</strong></td>
+<td><em>string</em></td>
+<td>Start date (UTC+0) with format: YYYY-MM-DD</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>end_date</strong></td>
+<td><em>string</em></td>
+<td>End date (UTC+0) with format: YYYY-MM-DD</td>
+<td><strong>Yes</strong></td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td><em>enum</em></td>
+<td>Value accept: [ <strong>playback_failure_percentage</strong>, <strong>video_startup_time</strong>, <strong>aggregate_startup_time</strong>, <strong>exits_before_video_start</strong>, <strong>rebuffer_percentage</strong>, <strong>rebuffer_frequency</strong>, <strong>playback_failure_score</strong>, <strong>rebuffer_count</strong>, <strong>rebuffer_duration</strong>, <strong>upscale_percentage</strong>, <strong>downscale_percentage</strong>, <strong>max_upscale_percentage</strong>, <strong>max_downscale_percentage</strong> ]</td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>date_time</strong></td>
+<td><em>timestamp</em></td>
+<td>Time point</td>
+</tr>
+<tr>
+<td><strong>value</strong></td>
+<td><em>number</em></td>
+<td>Value in time range</td>
+</tr>
+</tbody></table>
